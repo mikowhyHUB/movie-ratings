@@ -65,7 +65,7 @@ def update(id, title, year, director, rating):
 
 database()
 
-update(3, 'THe test', '999', 'tarantino', '10')
+# update(3, 'THe test', '999', 'tarantino', '10')
 # add_film('Test3', 1237, 'Bans', 9)
 # delete(2)
 # print(search(title='', year='2137'))
