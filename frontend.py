@@ -12,6 +12,28 @@ Uzytkownik moze:
 -usuwać film
 '''
 
+
+def view_command():
+    # clearing list every time when we press view button
+    list_films.delete(0, END)
+    for row in backend.view_list():
+        list_films.insert(END, row)
+
+
+def search_command():
+    list_films.delete(0, END)
+    for row in backend.search(title_text.get(), year_text.get(), director_text.get(), rating_text.get()):
+        list_films.insert(END, row)
+
+
+def add_command():
+    backend.add_film(title_text.get(), year_text.get(),
+                     director_text.get(), rating_text.get())
+    list_films.delete(0, END)
+    list_films.insert(END, title_text.get(), year_text.get(),
+                      director_text.get(), rating_text.get())
+
+
 window = Tk()
 
 l1 = Label(window, text='Film')
@@ -26,19 +48,19 @@ l3.grid(row=6, column=2)
 l4 = Label(window, text='Rating')
 l4.grid(row=7, column=2)
 
-film_text = StopIteration()
-e1 = Entry(window, textvariable=film_text)
+title_text = StringVar()
+e1 = Entry(window, textvariable=title_text)
 e1.grid(row=6, column=1)
 
-year_text = StopIteration()
+year_text = StringVar()
 e2 = Entry(window, textvariable=year_text)
 e2.grid(row=7, column=1)
 
-director_text = StopIteration()
+director_text = StringVar()
 e3 = Entry(window, textvariable=director_text)
 e3.grid(row=6, column=3)
 
-rating_text = StopIteration()
+rating_text = StringVar()
 e4 = Entry(window, textvariable=rating_text)
 e4.grid(row=7, column=3)
 
@@ -51,10 +73,10 @@ scrollbar.grid(row=1, column=2)
 list_films.configure(yscrollcommand=scrollbar.set)
 scrollbar.configure(command=list_films.yview)
 
-b0 = Button(window, text='View', width=12)
+b0 = Button(window, text='View all', width=12, command=view_command)
 b0.grid(row=0, column=3)
 
-b1 = Button(window, text='Search', width=12)
+b1 = Button(window, text='Search', width=12, command=search_command)
 b1.grid(row=1, column=3)
 
 b2 = Button(window, text='Sort', width=12)
@@ -66,7 +88,7 @@ b3.grid(row=3, column=3)
 b4 = Button(window, text='Update', width=12)
 b4.grid(row=4, column=3)
 
-b5 = Button(window, text='Add', width=12)
+b5 = Button(window, text='Add', width=12, command=add_command)
 b5.grid(row=5, column=3)
 
 
