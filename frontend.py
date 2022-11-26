@@ -29,6 +29,7 @@ def view_command():
 
 
 def search_command():
+
     list_films.delete(0, END)
     for row in backend.search(title_text.get(), year_text.get(), director_text.get(), rating_text.get()):
         list_films.insert(END, row)
@@ -111,6 +112,5 @@ b4.grid(row=4, column=3)
 
 b5 = Button(window, text='Add', width=12, command=add_command)
 b5.grid(row=5, column=3)
-
 
 window.mainloop()

@@ -63,5 +63,4 @@ def update(id, title, year, director, rating):
     conn.close()
 
 
-print(view_list())
 database()
