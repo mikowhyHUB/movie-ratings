@@ -11,6 +11,7 @@ Uzytkownik moze:
 -updateowac inofmracje o filmie
 -usuwać film
 '''
+def get_selected_row(event):
 
 
 def view_command():
@@ -30,8 +31,11 @@ def add_command():
     backend.add_film(title_text.get(), year_text.get(),
                      director_text.get(), rating_text.get())
     list_films.delete(0, END)
-    list_films.insert(END, title_text.get(), year_text.get(),
-                      director_text.get(), rating_text.get())
+    list_films.insert(END, (title_text.get(), year_text.get(),
+                      director_text.get(), rating_text.get()))
+
+
+def delete_command():
 
 
 window = Tk()
@@ -73,6 +77,8 @@ scrollbar.grid(row=1, column=2)
 list_films.configure(yscrollcommand=scrollbar.set)
 scrollbar.configure(command=list_films.yview)
 
+list_films.bind('<<ListboxSelect>>', get_slected_row)
+
 b0 = Button(window, text='View all', width=12, command=view_command)
 b0.grid(row=0, column=3)
 
@@ -82,7 +88,7 @@ b1.grid(row=1, column=3)
 b2 = Button(window, text='Sort', width=12)
 b2.grid(row=2, column=3)
 
-b3 = Button(window, text='Delete', width=12)
+b3 = Button(window, text='Delete', width=12, command=delete_command)
 b3.grid(row=3, column=3)
 
 b4 = Button(window, text='Update', width=12)
