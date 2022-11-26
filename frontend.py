@@ -11,7 +11,21 @@ Uzytkownik moze:
 -updateowac inofmracje o filmie
 -usuwać film
 '''
+# choosing index in listbox
+
+
 def get_selected_row(event):
+    global selected_tuple
+    index = list_films.curselection()[0]  # grabing index 0 of the tuple
+    selected_tuple = list_films.get(index)
+    e1.delete(0, END)
+    e1.insert(END, selected_tuple[1])
+    e2.delete(0, END)
+    e2.insert(END, selected_tuple[2])
+    e3.delete(0, END)
+    e3.insert(END, selected_tuple[3])
+    e4.delete(0, END)
+    e4.insert(END, selected_tuple[4])
 
 
 def view_command():
@@ -36,6 +50,8 @@ def add_command():
 
 
 def delete_command():
+    backend.delete(selected_tuple[0])
+    list_films.delete(0, END)
 
 
 window = Tk()
@@ -77,7 +93,7 @@ scrollbar.grid(row=1, column=2)
 list_films.configure(yscrollcommand=scrollbar.set)
 scrollbar.configure(command=list_films.yview)
 
-list_films.bind('<<ListboxSelect>>', get_slected_row)
+list_films.bind('<<ListboxSelect>>', get_selected_row)
 
 b0 = Button(window, text='View all', width=12, command=view_command)
 b0.grid(row=0, column=3)
