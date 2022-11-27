@@ -22,7 +22,7 @@ def get_selected_row(event):
 
 
 def view_command():
-    # clearing list every time when we press view button
+    # clearing list every time when we press view  button
     list_films.delete(0, END)
     for row in backend.view_list():
         list_films.insert(END, row)
@@ -55,6 +55,7 @@ def update_command():
 
 
 window = Tk()
+window.title('Movie Ratings')
 # assigning labels
 l1 = Label(window, text='Film')
 l1.grid(row=6, column=0)
@@ -90,8 +91,8 @@ list_films.grid(row=0, column=0, columnspan=2, rowspan=6)
 scrollbar = Scrollbar(window)
 scrollbar.grid(row=1, column=2)
 
-list_films.configure(yscrollcommand=scrollbar.set)
-scrollbar.configure(command=list_films.yview)
+# list_films.configure(yscrollcommand=scrollbar.set)
+# scrollbar.configure(command=list_films.yview)
 
 list_films.bind('<<ListboxSelect>>', get_selected_row)
 # assigining buttons
