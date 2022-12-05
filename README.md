@@ -11,7 +11,7 @@ I did this project to learn how frontend works and how interacts with backend.Th
 - Searching for films in your database
 - Deleting films from database
 - Updating films info
-- 
+
 ## Todo
 - Add sort button
 - Seperate data in listbox
