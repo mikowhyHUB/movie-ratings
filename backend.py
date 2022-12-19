@@ -3,64 +3,45 @@ import sqlite3
 # creating database
 
 
-def database():
-    conn = sqlite3.connect('films.db')
-    cur = conn.cursor()
-    cur.execute(
-        "CREATE TABLE IF NOT EXISTS films (id INTEGER PRIMARY KEY, title TEXT, year INTEGER, director TEXT, rating REAL) ")
-    conn.commit()
-    conn.close()
+class Database:
 
-# creating button functions
+    def __init__(self, db):
+        self.conn = sqlite3.connect(db)
+        self.cur = self.conn.cursor()
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS films (id INTEGER PRIMARY KEY, title TEXT, year INTEGER, director TEXT, rating REAL) ")
+        self.conn.commit()
 
+    # creating button functions
 
-def add_film(title, year, director, rating):
-    conn = sqlite3.connect('films.db')
-    cur = conn.cursor()
-    # null is for id
-    cur.execute("INSERT INTO films VALUES (NULL, ?,?,?,?)",
-                (title, year, director, rating))
-    conn.commit()
-    conn.close()
+    def add_film(self, title, year, director, rating):
+        # null is for id
+        self.cur.execute("INSERT INTO films VALUES (NULL, ?,?,?,?)",
+                         (title, year, director, rating))
+        self.conn.commit()
 
+    def view_list(self):
+        self.cur.execute("SELECT * FROM films")
+        data = self.cur.fetchall()
+        return data
+    # empty strings for error protection
 
-def view_list():
-    conn = sqlite3.connect('films.db')
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM films")
-    data = cur.fetchall()
-    conn.close()
-    return data
-# empty strings for error protection
+    def search(self, title="", year="", director="", rating=""):
+        self.cur.execute("SELECT * FROM films WHERE title=? OR year=? OR director=? OR rating=?",
+                         (title, year, director, rating))
+        data = self.cur.fetchall()
+        return data
 
+    def delete(self, id):
+        # null is for id
+        self.cur.execute("DELETE FROM films WHERE id=?", (id,))
+        self.conn.commit()
 
-def search(title="", year="", director="", rating=""):
-    conn = sqlite3.connect('films.db')
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM films WHERE title=? OR year=? OR director=? OR rating=?",
-                (title, year, director, rating))
-    data = cur.fetchall()
-    conn.close()
-    return data
+    def update(self, id, title, year, director, rating):
+        # null is for id
+        self.cur.execute("UPDATE films SET title=?, year=?,director=?,rating=? WHERE id=?",
+                         (title, year, director, rating, id))
+        self.conn.commit()
 
-
-def delete(id):
-    conn = sqlite3.connect('films.db')
-    cur = conn.cursor()
-    # null is for id
-    cur.execute("DELETE FROM films WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
-
-
-def update(id, title, year, director, rating):
-    conn = sqlite3.connect('films.db')
-    cur = conn.cursor()
-    # null is for id
-    cur.execute("UPDATE films SET title=?, year=?,director=?,rating=? WHERE id=?",
-                (title, year, director, rating, id))
-    conn.commit()
-    conn.close()
-
-
-database()
+    def __del__(self):
+        self.conn.close()
