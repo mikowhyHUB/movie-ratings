@@ -1,5 +1,7 @@
 from tkinter import *
-import backend
+from backend import Database
+
+database = Database('films.db')
 
 
 def get_selected_row(event):
@@ -24,33 +26,33 @@ def get_selected_row(event):
 def view_command():
     # clearing list every time when we press view  button
     list_films.delete(0, END)
-    for row in backend.view_list():
+    for row in database.view_list():
         list_films.insert(END, row)
 
 
 def search_command():
 
     list_films.delete(0, END)
-    for row in backend.search(title_text.get(), year_text.get(), director_text.get(), rating_text.get()):
+    for row in database.search(title_text.get(), year_text.get(), director_text.get(), rating_text.get()):
         list_films.insert(END, row)
 
 
 def add_command():
-    backend.add_film(title_text.get(), year_text.get(),
-                     director_text.get(), rating_text.get())
+    database.add_film(title_text.get(), year_text.get(),
+                      director_text.get(), rating_text.get())
     list_films.delete(0, END)
     list_films.insert(END, (title_text.get(), year_text.get(),
                       director_text.get(), rating_text.get()))
 
 
 def delete_command():
-    backend.delete(selected_tuple[0])
+    database.delete(selected_tuple[0])
     # restarting list after deleting item
     list_films.delete(0, END)
 
 
 def update_command():
-    backend.update(selected_tuple[0], title_text.get(
+    database.update(selected_tuple[0], title_text.get(
     ), year_text.get(), director_text.get(), rating_text.get())
 
 
