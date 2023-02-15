@@ -1,5 +1,5 @@
 from tkinter import *
-from backend import Database
+from src.backend import Database
 
 database = Database('films.db')
 
@@ -31,7 +31,6 @@ def view_command():
 
 
 def search_command():
-
     list_films.delete(0, END)
     for row in database.search(title_text.get(), year_text.get(), director_text.get(), rating_text.get()):
         list_films.insert(END, row)
@@ -42,7 +41,7 @@ def add_command():
                       director_text.get(), rating_text.get())
     list_films.delete(0, END)
     list_films.insert(END, (title_text.get(), year_text.get(),
-                      director_text.get(), rating_text.get()))
+                            director_text.get(), rating_text.get()))
 
 
 def delete_command():
